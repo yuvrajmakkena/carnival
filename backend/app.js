@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose"); 
 const Post = require('./models/post');
 
-mongoose.connect("mongodb+srv://uv:a@cluster0-fcy65.mongodb.net/test?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://uv:a@cluster0-fcy65.mongodb.net/node-angular?retryWrites=true&w=majority",{ useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{
     console.log('Connected to db')
 })
@@ -34,6 +34,7 @@ app.post("/api/posts",(req,res,next)=>{
         title:req.body.title,
         content:req.body.content 
         });
+    post.save();
     console.log(post);
     res.status(201).json({
         message:'Posts added Successfully'
@@ -42,11 +43,6 @@ app.post("/api/posts",(req,res,next)=>{
 });
 
 app.get("/api/posts", (req, res, next) => {
-    const posts = [
-        { id: "hk", title: "HakunaMatata", content: "Simba is on the way" },
-        { id: "hk2", title: "HakunaMatata", content: "Simba is on the way" }
-
-    ];
     res.status(200).json({
         message:'Posts fetched Successfully',
         posts:posts
